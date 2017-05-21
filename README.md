@@ -89,3 +89,31 @@ cps()
 }  
    ``` 
  
+  - Create testing file ps.c with code shown below:
+   ```
+   #include "types.h"
+#include "stat.h"
+#include "user.h"
+#include "fcntl.h"
+
+int
+main(int argc, char *argv[])
+{
+  cps();
+
+  exit();
+}
+  
+   ```
+  
+  - Modify Makefile:
+   
+   After you have compiled and run "$make qemu-nox", you can execute the command "$ps" inside xv6. You should see outputs similar to the following:
+   
+   ```
+    name 	 pid 	 state 
+init 	 1  	 SLEEPING 
+ sh 	 2  	 SLEEPING 
+ ps 	 3  	 RUNNING 
+   
+   ```
