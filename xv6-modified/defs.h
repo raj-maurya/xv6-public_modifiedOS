@@ -16,6 +16,7 @@ void            exit(void);
 
 void            yield(void);
 int             cps ( void );
+int 			chpr( int, int );
 
 // bio.c
 void            binit(void);

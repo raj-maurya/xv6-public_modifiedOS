@@ -71,7 +71,7 @@ forktest(void)
   int n, pid;
 
   printf(1, "fork test\n");
-  49:	c7 44 24 04 ec 03 00 	movl   $0x3ec,0x4(%esp)
+  49:	c7 44 24 04 f4 03 00 	movl   $0x3f4,0x4(%esp)
   50:	00 
   51:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
   58:	e8 b3 ff ff ff       	call   10 <printf>
@@ -137,7 +137,7 @@ forktest(void)
   }
 
   printf(1, "fork test OK\n");
-  a2:	c7 44 24 04 1e 04 00 	movl   $0x41e,0x4(%esp)
+  a2:	c7 44 24 04 26 04 00 	movl   $0x426,0x4(%esp)
   a9:	00 
   aa:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
   b1:	e8 5a ff ff ff       	call   10 <printf>
@@ -153,9 +153,9 @@ void
 printf(int fd, char *s, ...)
 {
   write(fd, s, strlen(s));
-  c0:	c7 04 24 2c 04 00 00 	movl   $0x42c,(%esp)
+  c0:	c7 04 24 34 04 00 00 	movl   $0x434,(%esp)
   c7:	e8 d4 00 00 00       	call   1a0 <strlen>
-  cc:	c7 44 24 04 2c 04 00 	movl   $0x42c,0x4(%esp)
+  cc:	c7 44 24 04 34 04 00 	movl   $0x434,0x4(%esp)
   d3:	00 
   d4:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
   db:	89 44 24 08          	mov    %eax,0x8(%esp)
@@ -172,7 +172,7 @@ printf(int fd, char *s, ...)
   for(; n > 0; n--){
     if(wait() < 0){
       printf(1, "wait stopped early\n");
-  e9:	c7 44 24 04 f7 03 00 	movl   $0x3f7,0x4(%esp)
+  e9:	c7 44 24 04 ff 03 00 	movl   $0x3ff,0x4(%esp)
   f0:	00 
   f1:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
   f8:	e8 13 ff ff ff       	call   10 <printf>
@@ -183,7 +183,7 @@ printf(int fd, char *s, ...)
 
   if(wait() != -1){
     printf(1, "wait got too many\n");
- 102:	c7 44 24 04 0b 04 00 	movl   $0x40b,0x4(%esp)
+ 102:	c7 44 24 04 13 04 00 	movl   $0x413,0x4(%esp)
  109:	00 
  10a:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
  111:	e8 fa fe ff ff       	call   10 <printf>
@@ -814,9 +814,15 @@ SYSCALL(uptime)
  3df:	cd 40                	int    $0x40
  3e1:	c3                   	ret    
 
-000003e2 <cps>:
-
-
- 3e2:	b8 16 00 00 00       	mov    $0x16,%eax
+000003e2 <chpr>:
+SYSCALL(chpr)
+ 3e2:	b8 17 00 00 00       	mov    $0x17,%eax
  3e7:	cd 40                	int    $0x40
  3e9:	c3                   	ret    
+
+000003ea <cps>:
+
+SYSCALL(cps)
+ 3ea:	b8 16 00 00 00       	mov    $0x16,%eax
+ 3ef:	cd 40                	int    $0x40
+ 3f1:	c3                   	ret    
