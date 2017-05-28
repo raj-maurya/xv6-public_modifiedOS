@@ -117,3 +117,4 @@ init 	 1  	 SLEEPING
  ps 	 3  	 RUNNING 
    
    ```
+### we will walk you through the steps of adding a priority attribute to a process in xv6 and changing its value
