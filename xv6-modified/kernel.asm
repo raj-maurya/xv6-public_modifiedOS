@@ -1857,7 +1857,7 @@ exec(char *path, char **argv)
 80100bb2:	8b 45 0c             	mov    0xc(%ebp),%eax
 80100bb5:	8b 00                	mov    (%eax),%eax
 80100bb7:	85 c0                	test   %eax,%eax
-80100bb9:	0f 84 66 01 00 00    	je     80100d25 <exec+0x375>
+80100bb9:	0f 84 6d 01 00 00    	je     80100d2c <exec+0x37c>
 80100bbf:	8b 7d 0c             	mov    0xc(%ebp),%edi
 80100bc2:	31 f6                	xor    %esi,%esi
 80100bc4:	8b 4d 0c             	mov    0xc(%ebp),%ecx
@@ -2048,29 +2048,28 @@ exec(char *path, char **argv)
   proc->tf->esp = sp;
 80100d08:	8b 50 18             	mov    0x18(%eax),%edx
 80100d0b:	89 5a 44             	mov    %ebx,0x44(%edx)
+   proc->priority = 2;    // Added statement
+80100d0e:	c7 40 7c 02 00 00 00 	movl   $0x2,0x7c(%eax)
   switchuvm(proc);
-80100d0e:	89 04 24             	mov    %eax,(%esp)
-80100d11:	e8 fa 5b 00 00       	call   80106910 <switchuvm>
+80100d15:	89 04 24             	mov    %eax,(%esp)
+80100d18:	e8 f3 5b 00 00       	call   80106910 <switchuvm>
   freevm(oldpgdir);
-80100d16:	89 34 24             	mov    %esi,(%esp)
-80100d19:	e8 12 5f 00 00       	call   80106c30 <freevm>
+80100d1d:	89 34 24             	mov    %esi,(%esp)
+80100d20:	e8 0b 5f 00 00       	call   80106c30 <freevm>
   return 0;
-80100d1e:	31 c0                	xor    %eax,%eax
-80100d20:	e9 ee fc ff ff       	jmp    80100a13 <exec+0x63>
+80100d25:	31 c0                	xor    %eax,%eax
+80100d27:	e9 e7 fc ff ff       	jmp    80100a13 <exec+0x63>
     goto bad;
   clearpteu(pgdir, (char*)(sz - 2*PGSIZE));
   sp = sz;
 
   // Push argument strings, prepare rest of stack in ustack.
   for(argc = 0; argv[argc]; argc++) {
-80100d25:	8b 9d ec fe ff ff    	mov    -0x114(%ebp),%ebx
-80100d2b:	31 f6                	xor    %esi,%esi
-80100d2d:	8d 95 58 ff ff ff    	lea    -0xa8(%ebp),%edx
-80100d33:	e9 0e ff ff ff       	jmp    80100c46 <exec+0x296>
-80100d38:	66 90                	xchg   %ax,%ax
-80100d3a:	66 90                	xchg   %ax,%ax
-80100d3c:	66 90                	xchg   %ax,%ax
-80100d3e:	66 90                	xchg   %ax,%ax
+80100d2c:	8b 9d ec fe ff ff    	mov    -0x114(%ebp),%ebx
+80100d32:	31 f6                	xor    %esi,%esi
+80100d34:	8d 95 58 ff ff ff    	lea    -0xa8(%ebp),%edx
+80100d3a:	e9 07 ff ff ff       	jmp    80100c46 <exec+0x296>
+80100d3f:	90                   	nop
 
 80100d40 <fileinit>:
   struct file file[NFILE];

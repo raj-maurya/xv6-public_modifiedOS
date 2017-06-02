@@ -23,7 +23,7 @@ main(int argc, char *argv[])
 
   if(argc < 2 )
    c:	83 7d 08 01          	cmpl   $0x1,0x8(%ebp)
-  10:	0f 8e 9f 00 00 00    	jle    b5 <main+0xb5>
+  10:	0f 8e 87 00 00 00    	jle    9d <main+0x9d>
     n = 1;       //default value
   else
     n = atoi ( argv[1] ); //from command line
@@ -41,7 +41,7 @@ main(int argc, char *argv[])
     n = atoi ( argv[1] ); //from command line
   27:	89 c7                	mov    %eax,%edi
   if ( n < 0 || n > 20 )
-  29:	0f 86 af 00 00 00    	jbe    de <main+0xde>
+  29:	0f 86 b3 00 00 00    	jbe    e2 <main+0xe2>
     n = 2;
   2f:	bf 02 00 00 00       	mov    $0x2,%edi
 {
@@ -51,54 +51,55 @@ main(int argc, char *argv[])
   if(argc < 2 )
     n = 1;       //default value
   34:	31 db                	xor    %ebx,%ebx
-  36:	eb 2e                	jmp    66 <main+0x66>
+  36:	eb 2f                	jmp    67 <main+0x67>
   id = 0;
   for ( k = 0; k < n; k++ ) {
     id = fork ();
     if ( id < 0 ) {
       printf(1, "%d failed in fork!\n", getpid() );
     } else if ( id > 0 ) {  //parent
-  38:	0f 84 81 00 00 00    	je     bf <main+0xbf>
+  38:	74 6a                	je     a4 <main+0xa4>
       printf(1, "Parent %d creating child  %d\n", getpid(), id );
-  3e:	e8 4f 03 00 00       	call   392 <getpid>
+  3a:	e8 53 03 00 00       	call   392 <getpid>
     n = atoi ( argv[1] ); //from command line
   if ( n < 0 || n > 20 )
     n = 2;
   x = 0;
   id = 0;
   for ( k = 0; k < n; k++ ) {
-  43:	83 c3 01             	add    $0x1,%ebx
+  3f:	83 c3 01             	add    $0x1,%ebx
     id = fork ();
     if ( id < 0 ) {
       printf(1, "%d failed in fork!\n", getpid() );
     } else if ( id > 0 ) {  //parent
       printf(1, "Parent %d creating child  %d\n", getpid(), id );
-  46:	89 74 24 0c          	mov    %esi,0xc(%esp)
-  4a:	c7 44 24 04 ec 07 00 	movl   $0x7ec,0x4(%esp)
-  51:	00 
-  52:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
-  59:	89 44 24 08          	mov    %eax,0x8(%esp)
-  5d:	e8 0e 04 00 00       	call   470 <printf>
+  42:	89 74 24 0c          	mov    %esi,0xc(%esp)
+  46:	c7 44 24 04 ec 07 00 	movl   $0x7ec,0x4(%esp)
+  4d:	00 
+  4e:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
+  55:	89 44 24 08          	mov    %eax,0x8(%esp)
+  59:	e8 12 04 00 00       	call   470 <printf>
+     wait ();
+  5e:	e8 b7 02 00 00       	call   31a <wait>
     n = atoi ( argv[1] ); //from command line
   if ( n < 0 || n > 20 )
     n = 2;
   x = 0;
   id = 0;
   for ( k = 0; k < n; k++ ) {
-  62:	39 fb                	cmp    %edi,%ebx
-  64:	7d 32                	jge    98 <main+0x98>
+  63:	39 fb                	cmp    %edi,%ebx
+  65:	7d 31                	jge    98 <main+0x98>
     id = fork ();
-  66:	e8 9f 02 00 00       	call   30a <fork>
+  67:	e8 9e 02 00 00       	call   30a <fork>
     if ( id < 0 ) {
-  6b:	85 c0                	test   %eax,%eax
+  6c:	85 c0                	test   %eax,%eax
   if ( n < 0 || n > 20 )
     n = 2;
   x = 0;
   id = 0;
   for ( k = 0; k < n; k++ ) {
     id = fork ();
-  6d:	89 c6                	mov    %eax,%esi
-  6f:	90                   	nop
+  6e:	89 c6                	mov    %eax,%esi
     if ( id < 0 ) {
   70:	79 c6                	jns    38 <main+0x38>
       printf(1, "%d failed in fork!\n", getpid() );
@@ -125,58 +126,55 @@ main(int argc, char *argv[])
   id = 0;
   for ( k = 0; k < n; k++ ) {
   92:	39 fb                	cmp    %edi,%ebx
-  94:	7c d0                	jl     66 <main+0x66>
+  94:	7c d1                	jl     67 <main+0x67>
   96:	66 90                	xchg   %ax,%ax
-   } else {   // child
-      printf(1, "Child %d created\n",getpid() );
+       x =  x + 3.14 * 89.64;   // useless calculations to consume CPU time
       break;
     }
   }
-  for ( z = 0; z < 8000000.0; z += 0.001 )
-  98:	d9 ee                	fldz   
-  9a:	dd 05 20 08 00 00    	fldl   0x820
-  a0:	dc c1                	fadd   %st,%st(1)
-  a2:	d9 05 28 08 00 00    	flds   0x828
-  a8:	df ea                	fucomip %st(2),%st
-  aa:	77 f4                	ja     a0 <main+0xa0>
-  ac:	dd d8                	fstp   %st(0)
-  ae:	dd d8                	fstp   %st(0)
-       x =  x + 3.14 * 89.64;   // useless calculations to consume CPU time
+  
   exit();
-  b0:	e8 5d 02 00 00       	call   312 <exit>
+  98:	e8 75 02 00 00       	call   312 <exit>
 {
   int  k, n, id;
   double x = 0,  z;
 
   if(argc < 2 )
     n = 1;       //default value
-  b5:	bf 01 00 00 00       	mov    $0x1,%edi
-  ba:	e9 75 ff ff ff       	jmp    34 <main+0x34>
+  9d:	bf 01 00 00 00       	mov    $0x1,%edi
+  a2:	eb 90                	jmp    34 <main+0x34>
       printf(1, "%d failed in fork!\n", getpid() );
     } else if ( id > 0 ) {  //parent
       printf(1, "Parent %d creating child  %d\n", getpid(), id );
-     // wait ();
+     wait ();
    } else {   // child
       printf(1, "Child %d created\n",getpid() );
-  bf:	e8 ce 02 00 00       	call   392 <getpid>
-  c4:	c7 44 24 04 0a 08 00 	movl   $0x80a,0x4(%esp)
-  cb:	00 
-  cc:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
-  d3:	89 44 24 08          	mov    %eax,0x8(%esp)
-  d7:	e8 94 03 00 00       	call   470 <printf>
-      break;
-  dc:	eb ba                	jmp    98 <main+0x98>
+  a4:	e8 e9 02 00 00       	call   392 <getpid>
+  a9:	c7 44 24 04 0a 08 00 	movl   $0x80a,0x4(%esp)
+  b0:	00 
+  b1:	c7 04 24 01 00 00 00 	movl   $0x1,(%esp)
+  b8:	89 44 24 08          	mov    %eax,0x8(%esp)
+  bc:	e8 af 03 00 00       	call   470 <printf>
+      for ( z = 0; z < 8000000.0; z += 0.001 )
+  c1:	d9 ee                	fldz   
+  c3:	dd 05 20 08 00 00    	fldl   0x820
+  c9:	8d b4 26 00 00 00 00 	lea    0x0(%esi,%eiz,1),%esi
+  d0:	dc c1                	fadd   %st,%st(1)
+  d2:	d9 05 28 08 00 00    	flds   0x828
+  d8:	df ea                	fucomip %st(2),%st
+  da:	77 f4                	ja     d0 <main+0xd0>
+  dc:	dd d8                	fstp   %st(0)
+  de:	dd d8                	fstp   %st(0)
+  e0:	eb b6                	jmp    98 <main+0x98>
     n = atoi ( argv[1] ); //from command line
   if ( n < 0 || n > 20 )
     n = 2;
   x = 0;
   id = 0;
   for ( k = 0; k < n; k++ ) {
-  de:	85 c0                	test   %eax,%eax
-  e0:	74 b6                	je     98 <main+0x98>
-  e2:	e9 4d ff ff ff       	jmp    34 <main+0x34>
-  e7:	66 90                	xchg   %ax,%ax
-  e9:	66 90                	xchg   %ax,%ax
+  e2:	85 c0                	test   %eax,%eax
+  e4:	74 b2                	je     98 <main+0x98>
+  e6:	e9 49 ff ff ff       	jmp    34 <main+0x34>
   eb:	66 90                	xchg   %ax,%ax
   ed:	66 90                	xchg   %ax,%ax
   ef:	90                   	nop
