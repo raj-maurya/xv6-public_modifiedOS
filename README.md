@@ -118,3 +118,11 @@ init 	 1  	 SLEEPING
    
    ```
 ## We will walk you through the steps of adding a priority attribute to a process in xv6 and changing its value
+
+
+
+# Resource for modifications to the XV6 OS:
+
+ - http://cse.csusb.edu/tongyu/courses/cs460/labs/lab7.php
+ - http://cse.csusb.edu/tongyu/courses/cs460/labs/lab8.php
+ - http://cse.csusb.edu/tongyu/courses/cs460/labs/lab9.php
